@@ -674,6 +674,13 @@ td, th {
   flex-wrap: wrap;
 }
 
+.flex-nowrap {
+  -webkit-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
 .flex-left {
   -webkit-box-pack: start;
   -ms-flex-pack: start;
@@ -3846,7 +3853,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .single-post-area .meta-details {
-  margin-top: 20px !important;
+  margin-top: 10px !important;
+  display: flex;
+  justify-content: center;
 }
 
 .single-post-area .social-links li {
@@ -4493,4 +4502,62 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .footer-text a, .footer-text i {
   color: #f8b600;
+}
+
+
+
+
+
+
+
+
+/*my custom CSS*/
+
+.post-content-area .single-post .meta-detail-custom {
+  margin: 2px auto !important;
+  width: 100%;
+  padding: 2px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.post-content-area .single-post .meta-detail-custom a {
+  color: black;
+}
+
+.post-content-area .single-post .meta-detail-custom ul {
+  margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.post-content-area .single-post .meta-detail-custom ul li {
+  margin: auto;
+}
+
+.post-content-area .single-post .meta-detail-custom .meta-detail-info-custom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5px;
+}
+
+
+.post-content-area .single-post .meta-detail-custom .meta-detail-info-custom .meta-detail-p-custom {
+  margin: 2px 10px;
+  padding: 5px;
+  color: black;
+  direction: rtl;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.post-content-area .single-post .meta-detail-custom .meta-detail-info-custom p span {
+  margin: auto 5px;
+}
+
+.post-content-area .single-post .meta-detail-custom .meta-detail-info-custom .meta-detail-p-custom li {
+  margin: auto 5px;
 }

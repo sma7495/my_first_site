@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
-    #image
+    image= models.ImageField(upload_to='blog/', default= 'blog/default.jpg')
     author= models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=150)
     content = models.TextField()
     #tag
-    #category
+    category= models.ManyToManyField('Category')
     counted_view = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
     published_date = models.DateTimeField(default= timezone.now())
@@ -21,3 +21,8 @@ class Post(models.Model):
         return self.title
 
     
+class Category (models.Model):
+    name=models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
