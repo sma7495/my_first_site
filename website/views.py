@@ -14,8 +14,9 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-
-    return render( request,'website/contact.html',)
+    else :
+        form = ContactForm()
+    return render( request,'website/contact.html',{'form':form})
 
 def elements_view(request):
     return render( request,'website/elements.html',)
