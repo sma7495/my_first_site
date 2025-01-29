@@ -91,7 +91,8 @@
 									</div>									
 								</div>
 							</div>
-							<div class="comments-area">
+							<!--
+														<div class="comments-area">
 								<h4>05 Comments</h4>
 								<div class="comment-list">
                                     <div class="single-comment justify-content-between d-flex">
@@ -189,24 +190,82 @@
                                     </div>
                                 </div>	                                             				
 							</div>
+							-->
+							<div class="comments-area">
+								<h4>{{comment|length}} Comment{{comment|pluralize}}</h4>
+								{% for com_item in comment %}
+									<div class="comment-list">
+										<div class="single-comment justify-content-between d-flex">
+											<div class="user justify-content-between d-flex">
+												<div class="thumb">
+													<img src="{% static 'website/img/blog/c1.jpg' %}" alt="">
+												</div>
+												<div class="desc">
+													<h5><a href="#">{{com_item.name}}</a></h5>
+													<p class="date">{{com_item.created_date}}</p>
+													<p class="comment">
+														{{com_item.message}}
+													</p>
+												</div>
+											</div>
+											<div class="reply-btn">
+												<a href="" class="btn-reply text-uppercase">reply</a> 
+											</div>
+										</div>
+									</div>
+									{% reply com_item.post.id com_item.id as reply_comments %}	
+									{% for reply in reply_comments %}
+
+										<div class="comment-list left-padding">
+											<div class="single-comment justify-content-between d-flex">
+												<div class="user justify-content-between d-flex">
+													<div class="thumb">
+														<img src="{% static 'website/img/blog/c2.jpg' %}" alt="">
+													</div>
+													<div class="desc">
+														<h5><a href="#">{{reply.name}}</a></h5>
+														<p class="date">{{reply.created_date}} </p>
+														<p class="comment">
+															{{reply.message}}
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>	
+
+									{% endfor %}
+								{% endfor%}
+							</div>
 							<div class="comment-form">
 								<h4>Leave a Comment</h4>
-								<form>
+								<form action="{% url 'blog:single-blog' pid=post.id %}" method="post">
+									{%  csrf_token %}
 									<div class="form-group form-inline">
 									  <div class="form-group col-lg-6 col-md-12 name">
-									    <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+									    <input type="text" class="form-control" name="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
 									  </div>
 									  <div class="form-group col-lg-6 col-md-12 email">
-									    <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+									    <input type="email" class="form-control" name="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
 									  </div>										
 									</div>
 									<div class="form-group">
-										<input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+										<input type="text" class="form-control" name="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
 									</div>
 									<div class="form-group">
 										<textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
 									</div>
-									<a href="#" class="primary-btn text-uppercase">Post Comment</a>	
+									<div class="form-group">
+										{{comment_form.captcha}}
+									</div>
+									<input type="hidden" name="post" value="{{post.id}}">
+									<div class="form-group">
+										{{comment_form.errors}}
+									</div>
+									{% if m %}
+									{{m}}
+									{% endif %}
+									<button class="primary-btn text-uppercase">Post Comment</button>	
+									
 								</form>
 							</div>
 						</div>

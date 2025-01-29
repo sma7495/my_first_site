@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from blog import models
+from blog import forms
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -22,8 +23,21 @@ def index_view(request):
 
 
 def about_view(request, pid):
+    m=""
     post = get_object_or_404(models.Post, pk=pid, status=1)
-    contex = {"post": post}
+    comment = models.Comments.objects.filter(post__id = pid, approved = True, reply = None)
+    if request.method == "POST":
+        comment_form = forms.CommentsForm(request.POST)
+        if comment_form.is_valid():
+            C = comment_form.save(commit=False)
+            C.post = post
+            C.save()
+            m = "saved" 
+        else:
+            m = "not saved"
+    else:
+        comment_form = forms.CommentsForm()
+    contex = {"post": post, "comment":comment, "comment_form":comment_form, "m":m}
     return render( request,'blog/blog-single.html', contex)
 
 

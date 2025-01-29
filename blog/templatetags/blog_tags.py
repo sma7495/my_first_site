@@ -9,6 +9,13 @@ def fun():
 
     return posts
 
+@register.simple_tag(name="reply")
+def fun(pid,cid=0):
+    if cid:
+        replies = models.Comments.objects.filter(post__id = pid, reply__id = cid, approved = True)
+    else:
+        replies = None
+    return replies
 
 @register.inclusion_tag("blog/blog-category.html")
 def blog_category():

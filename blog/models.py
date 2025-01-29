@@ -26,3 +26,15 @@ class Category (models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Comments (models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    reply = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=256)
+    email = models.EmailField()
+    subject = models.CharField(max_length=256)
+    message = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    approved = models.BooleanField(default=False)
